@@ -12,7 +12,7 @@ namespace ConsoleTBA
         {
             string playerName = "";
 
-            string playerGreeting = "Welcome, let's start off by Entering your name using the keyboard tool: ";
+            string playerGreeting = "Welcome, let's start off by (Enter)ing your name using the keyboard tool: ";
 
             string gameTitle = @"  \  |_ _|  ___| |   |__ __| |   |  _ \  |     ____|
    \ |  |  |     |   |   |   |   | |   | |     __|  
@@ -38,18 +38,21 @@ _____/ \___/ \____|\____|_____|_____/_____/ _|    \___/ _____|";
 
             string lineBreaker = "###########################################################";
 
-            string playerJewel1 = "RED";
+            string jewelRed = "Red";
 
-            string playerJewel2 = "GREEN";
+            string jewelGreen = "Green";
 
-            string playerJewel3 = "BLUE";
+            string jewelBlue = "Blue";
 
             string guess = "";
 
-            string hint = "Ow. Sire, please refrain from violently grabbing my finger. Must I remind you, it has to be a jewel. Thank you.";
+            string hint = "You have a feeling these jewels may hold unknown powers and possibly dictate your journey. Choose wisely.";
 
-            string enterPrompt = "Hit Enter to make your choice.";
-            
+            string enterPrompt = "Hit (Enter) to make your choice.";
+
+            ////const string format = "{0,-10} {1,10}";
+
+
             int guessAmount = 0;
 
             int guessLimit = 4;
@@ -58,7 +61,7 @@ _____/ \___/ \____|\____|_____|_____/_____/ _|    \___/ _____|";
 
 
 
-
+            ////Console.WriteLine(String.Format("{0," + ((Console.WindowWidth / 2) + ("test".Length / 2)) + "}", "test"));
             Console.Write(gameTitle);
             ////Console.Write(lineBreaker);
             ////Console.WriteLine();
@@ -67,25 +70,41 @@ _____/ \___/ \____|\____|_____|_____/_____/ _|    \___/ _____|";
             Console.Clear();
             Console.Write(gameContinued);
             Console.WriteLine();
-            Console.WriteLine("\nThank you! " + playerName + ". You are about to embark on a wonderful adventure. One with many great twists, characters, and events leading to an epic grand finale beyond your wildest imagination! Before we venture forth, I have another less" +
-                "\nintrusive question. I have 3 jewels, each vastly different from the other, still equally as beautiful in color." +
-                "\nBlue, Green, and Red. " + enterPrompt);
+            Console.Write("\nThank you! " + playerName + ". You are about to embark on a wonderful adventure. One with many great twists, characters, and events.\nAll leading to an epic grand finale beyond your wildest imagination! Before we venture forth, I have another less" +
+                "\nintrusive question. I have 3 jewels, each vastly different from the other, still equally as beautiful in color.\n");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write(jewelBlue + ", ");
+            Console.ResetColor();
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write(jewelGreen + ", ");
+            Console.ResetColor();
+            Console.Write("and ");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write(jewelRed + ". ");
+            Console.ResetColor();
+            Console.Write(enterPrompt);
+               
 
-            while (guess != playerJewel1 && !outOfGuesses)
+            while (!guess.Contains("GREEN") && !guess.Contains("RED") && !guess.Contains("BLUE") && !outOfGuesses)
 
                  {
 
                 if (guessAmount < guessLimit)
                 {
                     Console.WriteLine();
-                    Console.Write("Which would you like to take with you?: ");
+                    Console.Write("\nWhich would you like to take with you?: ");
                     guess = Console.ReadLine().ToUpper();
                     guessAmount++;
                     Console.WriteLine();
                     Console.ForegroundColor = ConsoleColor.DarkGray;
                     Console.Write(hint);
                     Console.ResetColor();
-                } else
+                } 
+
+
+
+
+                else
                 {
                     outOfGuesses = true;
                     break;
@@ -105,7 +124,7 @@ _____/ \___/ \____|\____|_____|_____/_____/ _|    \___/ _____|";
             {
                 Console.Clear();
                 
-                Console.Write("Marverlous choice, you store the jewel in your coin pouch for safe keeping.");
+                Console.Write("Marverlous choice, you store the " + (guess.ToLower()) + " jewel in your coin pouch for safe keeping.");
                 
             }
 
