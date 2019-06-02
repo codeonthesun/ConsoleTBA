@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Resources;
 
 namespace ConsoleTBA
 {
@@ -12,14 +13,12 @@ namespace ConsoleTBA
         {
             string playerName = "";
 
-            string playerGreeting = "Welcome, let's start off by (Enter)ing your name using the keyboard tool: ";
+            string playerGreeting = "Welcome, let's start off by signing your name using the keyboard tool: ";
 
             string gameTitle = @"  \  |_ _|  ___| |   |__ __| |   |  _ \  |     ____|
    \ |  |  |     |   |   |   |   | |   | |     __|  
  |\  |  |  |   | ___ |   |   ___ | |   | |     |    
-_| \_|___|\____|_|  _|  _|  _|  _|\___/ _____|_____|
-                                                    
-";
+_| \_|___|\____|_|  _|  _|  _|  _|\___/ _____|_____|";
 
             string gameContinued = @"  ___|  _ \   \  |__ __|_ _|  \  | |   | ____| __ \ 
  |     |   |   \ |   |    |    \ | |   | __|   |   |
@@ -36,7 +35,13 @@ _| _/    _\___|_____|\___/ _| \_\_____|_)_)  _| \_|\___/  _|
       | |   | |     |     |          |     | __|   |   | |    
 _____/ \___/ \____|\____|_____|_____/_____/ _|    \___/ _____|";
 
-            string lineBreaker = "###########################################################";
+            string journeyPart1 = @"     |  _ \  |   |  _ \   \  | ____|\ \   /    _ \__ __|  _ |
+     | |   | |   | |   |   \ | __|   \   /    |   |  |      |
+ \   | |   | |   | __ <  |\  | |        |     ___/   |      |
+\___/ \___/ \___/ _| \_\_| \_|_____|   _|    _|     _|     _|";
+
+            string lineBreaker = @"______________________________________________________
+";
 
             string jewelRed = "Red";
 
@@ -48,14 +53,14 @@ _____/ \___/ \____|\____|_____|_____/_____/ _|    \___/ _____|";
 
             string hint = "You have a feeling these jewels may hold unknown powers and possibly dictate your journey. Choose wisely.";
 
-            string enterPrompt = "Hit (Enter) to make your choice.";
+            string enterPrompt = "Hit (Enter) to make your choice or receieve a hint.";
 
             ////const string format = "{0,-10} {1,10}";
 
 
             int guessAmount = 0;
 
-            int guessLimit = 4;
+            int guessLimit = 5;
 
             bool outOfGuesses = false;
 
@@ -63,14 +68,17 @@ _____/ \___/ \____|\____|_____|_____/_____/ _|    \___/ _____|";
 
             ////Console.WriteLine(String.Format("{0," + ((Console.WindowWidth / 2) + ("test".Length / 2)) + "}", "test"));
             Console.Write(gameTitle);
-            ////Console.Write(lineBreaker);
-            ////Console.WriteLine();
+            Console.WriteLine();
+            Console.Write(lineBreaker);
+            Console.WriteLine();
             Console.Write(playerGreeting);
             playerName = Console.ReadLine();
             Console.Clear();
             Console.Write(gameContinued);
             Console.WriteLine();
-            Console.Write("\nThank you! " + playerName + ". You are about to embark on a wonderful adventure. One with many great twists, characters, and events.\nAll leading to an epic grand finale beyond your wildest imagination! Before we venture forth, I have another less" +
+            Console.Write(lineBreaker);
+            Console.WriteLine();
+            Console.Write("\nThank you " + playerName + "! You are about to embark on a wonderful adventure. One with many great twists, characters, and events. All leading to an epic grand finale beyond your wildest imagination! Before we venture forth, I have another less" +
                 "\nintrusive question. I have 3 jewels, each vastly different from the other, still equally as beautiful in color.\n");
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.Write(jewelBlue + ", ");
@@ -117,14 +125,17 @@ _____/ \___/ \____|\____|_____|_____/_____/ _|    \___/ _____|";
                 Console.Clear();
                 Console.Write(gameOver);
                 Console.WriteLine();
-                Console.Write("\nYou are lose! Just kidding, try again and make sure to Enter an appropiate jewel.");
+                Console.Write("\nYou are lose! Just kidding, try again. " + guessAmount +  " failed attempts, are you trying to break a record?");
 
             }
             else
             {
                 Console.Clear();
-                
-                Console.Write("Marverlous choice, you store the " + (guess.ToLower()) + " jewel in your coin pouch for safe keeping.");
+                Console.Write(journeyPart1);
+                Console.WriteLine();
+                Console.Write(lineBreaker);
+                Console.WriteLine();
+                Console.WriteLine("Marverlous choice, you store the " + (guess.ToLower()) + " jewel in your coin pouch for safe keeping.");
                 
             }
 
