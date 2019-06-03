@@ -47,8 +47,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Alba.CsConsoleFormat, Version=1.0.0.89, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Alba.CsConsoleFormat.1.0.0\lib\net40\Alba.CsConsoleFormat.dll</HintPath>
+    </Reference>
+    <Reference Include="Colorify, Version=2.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\dein.Colorify.2.4.0\lib\netstandard2.0\Colorify.dll</HintPath>
+    </Reference>
+    <Reference Include="Figgle, Version=0.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Figgle.0.3.0\lib\net45\Figgle.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -61,7 +72,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="any\any" />
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
