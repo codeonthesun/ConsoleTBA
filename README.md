@@ -2,6 +2,8 @@
 
 
 <p align="center">
+  Title screen.
   <img src="https://i.imgur.com/1XDiX6s.gif">
+  Preview.
   <img src="https://i.imgur.com/ADgYPyn.png">
 </p>
