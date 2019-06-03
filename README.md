@@ -2,6 +2,6 @@
 
 
 <p align="center">
-  <img src="https://i.imgur.com/1XDiX6s.gif" width="350" title="hover text">
-  <img src="https://i.imgur.com/1XDiX6s.gif" width="350" alt="accessibility text">
+  <img src="https://i.imgur.com/1XDiX6s.gif">
+  <img src="https://i.imgur.com/ADgYPyn.png">
 </p>
