@@ -13,7 +13,7 @@ namespace ConsoleTBA
 
             string playerName = "";
 
-            string playerGreeting = "I see your sleep has come to an end stranger, woefully time is not our ally. Introductions are not important, so I request you listen closely. If you want to know why you lay in a stone cell waiting death in this decrepit castle. Humble me with your otherwise misguided human trust and sign your name to contract so I may pass on a physical possesion. In this ethereal state I am unable to aid in this plight and your consciousness returns. I fear this close to death experience is one-time catalyst to our communcation.  ";
+            string playerGreeting = "I see your sleep has come to an end stranger, woefully time is not our ally. Introductions are not important, so I request you listen closely. If you want to know why you lay in a stone cell waiting death in this decrepit castle. Humble me with your otherwise misguided human trust and sign your name to contract so I may pass on a physical possesion. In the ethereal state I am unable to aid in this plight and your consciousness returns. I fear this close to death experience is one-time catalyst to our communcation.  ";
 
             string gameTitle = @"███▄    █  ██▓  ▄████  ██░ ██ ▄▄▄█████▓ ██░ ██  ▒█████   ██▓    ▓█████
  ██ ▀█   █ ▓██▒ ██▒ ▀█▒▓██░ ██▒▓  ██▒ ▓▒▓██░ ██▒▒██▒  ██▒▓██▒    ▓█   ▀
