@@ -65,7 +65,7 @@ _____/ \___/ \____|\____|_____|_____/_____/ _|    \___/ _____|";
 
             string guess = "";
 
-            string hint = "(You have a feeling these jewels may hold unknown powers and possibly dictate your journey. Choose wisely.)";
+            string hint = Wrap1("   (You have a feeling these jewels hold unknown powers and will possibly dictate your journey. Choose either the Blue, Green or Red jewel...)", 118);
 
             string enterPrompt = "[ enter ]";
 
@@ -192,7 +192,7 @@ _____/ \___/ \____|\____|_____|_____/_____/ _|    \___/ _____|";
                     guessAmount++;
                     Console.ForegroundColor = ConsoleColor.DarkGray;
                     Console.Write("\n" + hint);
-                    Console.WriteLine();
+
                     Console.ResetColor();
                 }
                 else
@@ -223,8 +223,7 @@ _____/ \___/ \____|\____|_____|_____/_____/ _|    \___/ _____|";
 
         private static void MethodGameTitle(string gameTitle)
         {
-            Console.BackgroundColor = ConsoleColor.White;
-            Console.ForegroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine();
