@@ -3,5 +3,5 @@
 
 <p align="center">
   <img src="https://i.imgur.com/1XDiX6s.gif">
-  <img src="https://i.imgur.com/ADgYPyn.png">
+  <img src="https://i.imgur.com/ewjaxWU.png>
 </p>
