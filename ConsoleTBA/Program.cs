@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace ConsoleTBA
+namespace Nighthole
 {
     internal class Program
 
@@ -12,19 +12,17 @@ namespace ConsoleTBA
         {
             Console.OutputEncoding = Encoding.UTF8;
 
-            string playerName = "";
+            string playerName = " ";
 
-            string playerGreeting = "I see your rest has come to an end stranger, woefully time is not our ally. Introductions are not important, so I ask you listen closely. If you want to know why you lay in a stone cell waiting death in this decrepit castle. Humble me with your otherwise misguided human trust and sign your name to contract so I may pass on a physical possesion. In the ethereal state I am unable to aid in this plight and your consciousness returns. I fear this close to death experience is one-time catalyst to our communcation.  ";
+            string playerGreeting = "   Blimey! At last your wake ends stranger. Woefully time is not our ally, introductions are non-important, so I ask you listen closely. If you want to know why you lay in a stone cell waiting death in this decrepit castle. Humble me with your otherwise misguided human faith, and sign your name to contract so I may pass on a physical possession. In the ethereal state I am unable to aid in this plight and your consciousness returns. I fear this close to death experience is a one-time catalyst to our communication.  ";
 
-            string gameTitle = @"███▄    █  ██▓  ▄████  ██░ ██ ▄▄▄█████▓ ██░ ██  ▒█████   ██▓    ▓█████
+            string gameTitle = @" ███▄    █  ██▓  ▄████  ██░ ██ ▄▄▄█████▓ ██░ ██  ▒█████   ██▓    ▓█████
  ██ ▀█   █ ▓██▒ ██▒ ▀█▒▓██░ ██▒▓  ██▒ ▓▒▓██░ ██▒▒██▒  ██▒▓██▒    ▓█   ▀
 ▓██  ▀█ ██▒▒██▒▒██░▄▄▄░▒██▀▀██░▒ ▓██░ ▒░▒██▀▀██░▒██░  ██▒▒██░    ▒███
 ▓██▒  ▐▌██▒░██░░▓█  ██▓░▓█ ░██ ░ ▓██▓ ░ ░▓█ ░██ ▒██   ██░▒██░    ▒▓█  ▄
 ▒██░   ▓██░░██░░▒▓███▀▒░▓█▒░██▓  ▒██▒ ░ ░▓█▒░██▓░ ████▓▒░░██████▒░▒████▒
 ░ ▒░   ▒ ▒ ░▓   ░▒   ▒  ▒ ░░▒░▒  ▒ ░░    ▒ ░░▒░▒░ ▒░▒░▒░ ░ ▒░▓  ░░░ ▒░ ░
-░ ░░   ░ ▒░ ▒ ░  ░   ░  ▒ ░▒░ ░    ░     ▒ ░▒░ ░  ░ ▒ ▒░ ░ ░ ▒  ░ ░ ░  ░
-   ░   ░ ░  ▒ ░░ ░   ░  ░  ░░ ░  ░       ░  ░░ ░░ ░ ░ ▒    ░ ░      ░
-         ░  ░        ░  ░  ░  ░          ░  ░  ░    ░ ░      ░  ░   ░  ░";
+░ ░░   ░ ▒░ ▒ ░  ░   ░  ▒ ░▒░ ░    ░     ▒ ░▒░ ░  ░ ▒ ▒░ ░ ░ ▒  ░ ░ ░  ░";
 
             string mysteriousVoice = @" __  ____   ______ _____ _____ ____  ___ ___  _   _ ____   __     _____ ___ ____ _____
  |  \/  \ \ / / ___|_   _| ____|  _ \|_ _/ _ \| | | / ___|  \ \   / / _ \_ _/ ___| ____|  _
@@ -52,6 +50,10 @@ _____/ \___/ \____|\____|_____|_____/_____/ _|    \___/ _____|";
  \   | |   | |   | __ <  |\  | |        |     ___/   |      |
 \___/ \___/ \___/ _| \_\_| \_|_____|   _|    _|     _|     _|";
 
+            string gameTitle2 = @" ░ ▒░  ░   ▒ ░ ░   ░ ░  ░  ░▒ ░ ▒░    ░    ▒░▒   ░ ░░▒░ ░ ░  ▒ ░  ░ ▒ ▒░
+   ░   ░   ░   ░     ░     ░░   ░   ░       ░    ░  ░░░ ░ ░  ▒ ░░ ░ ░ ▒
+    ░        ░       ░  ░   ░               ░         ░      ░      ░ ░  ";
+
             string lineBreaker = @"______________________________________________________
 ";
 
@@ -63,9 +65,9 @@ _____/ \___/ \____|\____|_____|_____/_____/ _|    \___/ _____|";
 
             string guess = "";
 
-            string hint = "You have a feeling these jewels may hold unknown powers and possibly dictate your journey. Choose wisely.";
+            string hint = "(You have a feeling these jewels may hold unknown powers and possibly dictate your journey. Choose wisely.)";
 
-            string enterPrompt = "Hit (Enter) to make your choice or receive a hint.";
+            string enterPrompt = "[ enter ]";
 
             ////const string format = "{0,-10} {1,10}";
 
@@ -90,56 +92,107 @@ _____/ \___/ \____|\____|_____|_____/_____/ _|    \___/ _____|";
             Console.WriteLine("ARCANE VOICE: ");
             Console.ResetColor();
             Console.Write(Wrap1(playerGreeting, 118));
+            Console.ReadKey(true);
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.Write("Sign your name to contract if you accept: ");
+            Console.WriteLine();
+            Console.Write("   Sign your name and hit ");
             Console.ResetColor();
-            playerName = Console.ReadLine();
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write(enterPrompt);
+            Console.ResetColor();
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write(" if you accept:");
+            Console.ResetColor();
+            /////playerName = Console.ReadLine();
+            ///string playerName = " ";
+            do
+            {
+                Console.Write(" ");
+                Console.ForegroundColor = ConsoleColor.Red;
+                playerName = Console.ReadLine();
+                if (!string.IsNullOrEmpty(playerName))
+                {
+                }
+                else
+                {
+                    Console.WriteLine();
+                    Console.Write("   (Sorry, this isn't actually a choice... You MUST sign your name):");
+                    ////System.Threading.Thread.Sleep(70);
+                    /////Console.Clear();
+                }
+            } while (string.IsNullOrEmpty(playerName));
+
+            {
+                for (int i = 0; i < @"~~".PadLeft(58).Length; i++)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write(@"~~");
+                    Console.ResetColor();
+                    System.Threading.Thread.Sleep(5);
+                }
+
+                Console.Write("X");
+
+                while (!(Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Enter))
+                {
+                    break;
+                }
+            }
 
             Console.ForegroundColor = ConsoleColor.DarkGray;
-            Console.Write(Wrap1("(You groggily lift your arm to your left eye to learn it's now closed and scarred over in blood. You hear several footsteps coming towards your cell. " +
-                "With blood on your thumbs neighboring fingers, you sign your name on the cold floor to the sound of your heart racing in fear.) " +
-                "As you finish the final character in your signature, the wind chills and the ghost-like entity dissappears. You then faintly hear words in a forgien language to man. " +
-                "Below where the voice lingers lay 3 radiant jewels.)", 118));
+            Console.WriteLine("\n");
+
+            Console.Write(Wrap1("   (Muted and befuddled by the situation, your primary hand reaches to your left eye unconsciously to learn it is now closed and scarred over in blood.", 118));
+            Console.ReadKey(); ///Console.WriteLine();
+            Console.Write(Wrap1("   You hear several footsteps approaching the cell, scabbards scraping the rough ground behind them.", 118));
+            Console.ReadKey(); ///Console.WriteLine();
+            Console.Write(Wrap1("   The pain kicks in and suddenly your body tenses with fear and unimaginable sharpness. ", 118));
+            Console.ReadKey(); ////Console.WriteLine();
+            Console.Write(Wrap1("   Now with blood on your thumbs neighboring fingers, you sign your name on the cold floor to the sound of your heartbeat.", 118));
+            Console.ReadKey();/// Console.WriteLine();
+            Console.Write(Wrap1("   As you finish the final character in your signature, the ambiance surrounding changes, the wind chills.", 118));
+            Console.ReadKey();//// Console.WriteLine();
+            Console.Write(Wrap1("   The ghost-like entity disappears and you faintly hear words in a language foreign to you.", 118));
+            Console.ReadKey(); ////Console.WriteLine();
+            Console.Write(Wrap1("   Below where the voice lingered rest 3 radiant jewels.", 118));
+            Console.ReadKey(); /////Console.WriteLine();
+            Console.Write(Wrap1("   The first blue as the vast waters encapsulating all that is undiscovered, the second green as Gaia's untampered forests, and the last is a searing red with a powerful aura of recreation through death.)", 118));
+
             Console.ResetColor();
-            Console.WriteLine();
             /////////Console.Write(gameContinued);
-            Console.WriteLine();
             Console.ReadKey(true);
-            Console.Write(lineBreaker);
             /////Console.Write("\nThank you " + playerName + "! You are about to embark on a wonderful adventure. " +
             ////"One with many great twists, characters, and events. All leading to an epic grand finale " +
             ////"beyond your wildest imagination! Before we venture forth, I have another less" +
             ////"\nintrusive question. I have 3 jewels, each vastly different from the other, still equally as beautiful in color.\n");
-            Console.ForegroundColor = ConsoleColor.Blue;
-            Console.Write(jewelBlue + ", ");
-            Console.ResetColor();
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.Write(jewelGreen + ", ");
-            Console.ResetColor();
-            Console.Write("and ");
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.Write(jewelRed + ". ");
-            Console.ResetColor();
-            Console.Write(enterPrompt);
-            MethodLimitedAnswerQuestionWithHint(gameOverTitle, journeyPart1, lineBreaker, ref guess, hint, ref guessAmount, guessLimit, ref outOfGuesses);
+            //////Console.Write(enterPrompt);
+            MethodLimitedAnswerQuestionWithHint(enterPrompt, gameOverTitle, journeyPart1, lineBreaker, ref guess, hint, ref guessAmount, guessLimit, ref outOfGuesses);
             ConsoleWindow.QuickEditMode(false);
             Console.ReadLine();
         }
 
-        private static void MethodLimitedAnswerQuestionWithHint(string gameOver, string journeyPart1, string lineBreaker, ref string guess, string hint, ref int guessAmount, int guessLimit, ref bool outOfGuesses)
+        private static void MethodLimitedAnswerQuestionWithHint(string enterPrompt, string gameOver, string journeyPart1, string lineBreaker, ref string guess, string hint, ref int guessAmount, int guessLimit, ref bool outOfGuesses)
         {
             while (!guess.Contains("GREEN") && !guess.Contains("RED") && !guess.Contains("BLUE") && !outOfGuesses)
 
             {
                 if (guessAmount < guessLimit)
                 {
+                    Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine();
-                    Console.Write("\nWhich would you like to take with you?: ");
+                    Console.Write("   Which calls to you? hit ");
+                    Console.ResetColor();
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write(enterPrompt);
+                    Console.ResetColor();
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.Write(" to confirm or receive a hint: ");
+                    Console.ResetColor();
                     guess = Console.ReadLine().ToUpper();
                     guessAmount++;
-                    Console.WriteLine();
                     Console.ForegroundColor = ConsoleColor.DarkGray;
-                    Console.Write(hint);
+                    Console.Write("\n" + hint);
+                    Console.WriteLine();
                     Console.ResetColor();
                 }
                 else
@@ -170,7 +223,8 @@ _____/ \___/ \____|\____|_____|_____/_____/ _|    \___/ _____|";
 
         private static void MethodGameTitle(string gameTitle)
         {
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.Black;
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine();
@@ -189,15 +243,15 @@ _____/ \___/ \____|\____|_____|_____/_____/ _|    \___/ _____|";
             Console.WriteLine();
             Console.WriteLine();
 
-            Console.Write("(Text Based Adventure Game.)".PadLeft(48));
+            Console.Write("(Text Based Adventure Game.)".PadLeft(49));
 
             Console.WriteLine();
             Console.WriteLine();
 
-            for (int i = 0; i < "Double tap [ spacebar ] to start ".PadLeft(51).Length; i++)
+            for (int i = 0; i < "Double tap [ spacebar ] to start ".PadLeft(52).Length; i++)
             {
                 Console.BackgroundColor = ConsoleColor.Black;
-                Console.Write("Double tap [ spacebar ] to start ".PadLeft(51)[i]);
+                Console.Write("Double tap [ spacebar ] to start ".PadLeft(52)[i]);
                 Console.ResetColor();
                 System.Threading.Thread.Sleep(70);
             }
