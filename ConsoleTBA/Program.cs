@@ -14,7 +14,7 @@ namespace Nighthole
 
             string playerName = " ";
 
-            string playerGreeting = "   Blimey! At last your wake ends stranger. Woefully time is not our ally, introductions are non-important, so I ask you listen closely. If you want to know why you lay in a stone cell waiting death in this decrepit castle. Humble me with your otherwise misguided human faith, and sign your name to contract so I may pass on a physical possession. In the ethereal state I am unable to aid in this plight and your consciousness returns. I fear this close to death experience is a one-time catalyst to our communication.  ";
+            string playerGreeting = "Blimey! At last your wake ends stranger. Woefully time is not our ally, introductions are non-important, so I ask you listen closely. If you want to know why you lay in a stone cell waiting death in this decrepit castle. Humble me with your otherwise misguided human faith, and sign your name to contract so I may pass on a physical possession. In the ethereal state I am unable to aid in this plight and your consciousness returns. I fear this close to death experience is a one-time catalyst to our communication.  ";
 
             string gameTitle = @" ███▄    █  ██▓  ▄████  ██░ ██ ▄▄▄█████▓ ██░ ██  ▒█████   ██▓    ▓█████
  ██ ▀█   █ ▓██▒ ██▒ ▀█▒▓██░ ██▒▓  ██▒ ▓▒▓██░ ██▒▒██▒  ██▒▓██▒    ▓█   ▀
@@ -63,13 +63,11 @@ _____/ \___/ \____|\____|_____|_____/_____/ _|    \___/ _____|";
 
             string jewelBlue = "Blue";
 
-            string guess = "";
+            string guess = " ";
 
-            string hint = ("   (You have a feeling these jewels hold unknown powers and will possibly dictate your journey. Choose either the Blue, Green, or Red jewel...)");
+            string hint = ("(You have a feeling these jewels hold unknown powers and will possibly dictate your journey. Choose either the Blue, Green, or Red jewel...)");
 
             string enterPrompt = "[ enter ]";
-
-            ////const string format = "{0,-10} {1,10}";
 
             int guessAmount = 0;
 
@@ -88,12 +86,14 @@ _____/ \___/ \____|\____|_____|_____/_____/ _|    \___/ _____|";
             }
 
             {
+
+                Console.BackgroundColor = ConsoleColor.White;
+                Console.ForegroundColor = ConsoleColor.Black;
                 Console.WriteLine("ARCANE VOICE: ");
                 Console.ResetColor();
-                Console.Write(Wrap1(playerGreeting, 118));
+                Console.Write(Wrap1("   " + playerGreeting, 118));
                 Console.ReadKey(true);
                 Console.ForegroundColor = ConsoleColor.Green;
-
                 Console.Write("\n" + "   Sign your name and hit ");
                 Console.ResetColor();
                 Console.ForegroundColor = ConsoleColor.White;
@@ -136,14 +136,13 @@ _____/ \___/ \____|\____|_____|_____/_____/ _|    \___/ _____|";
 
             {
                 Console.ForegroundColor = ConsoleColor.DarkGray;
-                Console.WriteLine("\n");
-                Console.Write(Wrap1("   (Muted and befuddled by the situation, your primary hand reaches to your left eye unconsciously to learn it is now closed and scarred over in blood.", 118));
+                Console.Write(Wrap1("\n" + "   (Muted and befuddled by the situation, your primary hand reaches to your left eye unconsciously to learn it is now closed and scarred over in blood.", 118));
                 Console.ReadKey(true);
                 Console.Write(Wrap1("   You hear several footsteps approaching the cell, scabbards scraping the rough ground behind them.", 118));
                 Console.ReadKey(true);
-                Console.Write(Wrap1("   The pain kicks in and suddenly your body tenses with fear and unimaginable sharpness. ", 118));
+                Console.Write(Wrap1("   The pain kicks in and suddenly your body tenses with fear and an unimaginable sharpness.", 118));
                 Console.ReadKey(true);
-                Console.Write(Wrap1("   Now with blood on your thumbs neighboring fingers, you sign your name on the cold floor to the sound of your heartbeat.", 118));
+                Console.Write(Wrap1("   With blood on your thumbs neighboring fingers, you sign your name on the cold floor to the sound of your heartbeat.", 118));
                 Console.ReadKey(true);
                 Console.Write(Wrap1("   As you finish the final character in your signature, the ambiance surrounding changes, the wind chills.", 118));
                 Console.ReadKey(true);
@@ -154,13 +153,13 @@ _____/ \___/ \____|\____|_____|_____/_____/ _|    \___/ _____|";
                 Console.Write(Wrap1("   The first Blue as the vast waters encapsulating all that is undiscovered, the second a vibrant Green, comparable to Gaia's untampered forests, and the last is a searing Red with a powerful aura of recreation through death.)", 118));
                 Console.ResetColor();
                 Console.ReadKey(true);
-                UserChoiceWithHint(enterPrompt, gameOverTitle, journeyPart1, lineBreaker, ref guess, hint, ref guessAmount, guessLimit, ref outOfGuesses);
+                UserChoiceWithHint(playerName, enterPrompt, gameOverTitle, journeyPart1, lineBreaker, ref guess, hint, ref guessAmount, guessLimit, ref outOfGuesses);
                 ConsoleWindow.QuickEditMode(false);
                 Console.ReadLine();
             }
         }
 
-        private static void UserChoiceWithHint(string enterPrompt, string gameOver, string journeyPart1, string lineBreaker, ref string guess, string hint, ref int guessAmount, int guessLimit, ref bool outOfGuesses)
+        private static void UserChoiceWithHint(string playerName, string enterPrompt, string gameOver, string journeyPart1, string lineBreaker, ref string guess, string hint, ref int guessAmount, int guessLimit, ref bool outOfGuesses)
         {
             while (!guess.Contains("GREEN") && !guess.Contains("RED") && !guess.Contains("BLUE") && !outOfGuesses)
 
@@ -168,8 +167,7 @@ _____/ \___/ \____|\____|_____|_____/_____/ _|    \___/ _____|";
                 if (guessAmount < guessLimit)
                 {
                     Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine();
-                    Console.Write("   Which calls to you? hit ");
+                    Console.Write("\n" + "   Which calls to you? hit ");
                     Console.ResetColor();
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.Write(enterPrompt);
@@ -180,7 +178,7 @@ _____/ \___/ \____|\____|_____|_____/_____/ _|    \___/ _____|";
                     guess = Console.ReadLine().ToUpper();
                     guessAmount++;
                     Console.ForegroundColor = ConsoleColor.DarkGray;
-                    Console.Write(Wrap1("\n" + hint, 118));
+                    Console.Write(Wrap1("\n" + "   " + hint, 118));
 
                     Console.ResetColor();
                 }
@@ -204,10 +202,37 @@ _____/ \___/ \____|\____|_____|_____/_____/ _|    \___/ _____|";
                 Console.Clear();
                 Console.Write(journeyPart1);
                 Console.Write("\n" + lineBreaker);
-                Console.WriteLine();
-                Console.WriteLine("\n" + "(You tightly hold the " + (guess.ToLower()) + " jewel in your hand)");
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+                Console.Write(Wrap1("\n" + "   (You tightly hold the " + (guess.ToLower()) + " jewel in your hand, blanketing it in your blood.", 118));
                 Console.ReadKey(true);
-                Console.WriteLine("hello");
+                Console.Write(Wrap1("   Time appears to speed up, or rather return to it's normal state?", 118));
+                Console.ReadKey(true);
+                Console.Write(Wrap1("   You question your sanity, then Like thunder striking, all the sounds abruptly return at once in a painful blow.)", 118));
+                Console.ReadKey(true);
+                Console.Write(Wrap1("   Before you can react to the overstimulation of your senses, sharp weaponry prodding and slicing at the door hits your ears.", 118));
+                Console.ReadKey(true);
+                Console.Write(Wrap1("   Fatigued, bruised, and confused you survey the area with your eye to find any information.", 118));
+                Console.ReadKey(true);
+                Console.Write(Wrap1("   All you see is an empty moss filed stone hell...", 118));
+                Console.ReadKey(true);
+                Console.Write(Wrap1("   Accompanying the 4 large windowless walls, a  metal door standing two men tall with 4 small holes for light to pass.", 118));
+                Console.ResetColor();
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.ReadKey(true);
+                Console.Write(Wrap1("   KCKCKCKCKCKCKC~~~ ", 118));
+                Console.ResetColor();
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+                Console.ReadKey(true);
+                Console.Write(Wrap1("   Before you can react to the overstimulation of your senses, you hear metal weaponry prodding and slicing at metal door that cage you.)", 118));
+                Console.ReadKey(true);
+                Console.ResetColor();
+                Console.BackgroundColor = ConsoleColor.White;
+                Console.ForegroundColor = ConsoleColor.Black;
+                Console.Write("Unknown Bandit: ");
+                Console.ResetColor();
+                Console.Write("\n   Oi, me's aint having fun! Wat you say we chop n' hacks " + playerName + "??");
+                Console.ReadKey(true);
+
             }
         }
 
@@ -231,7 +256,6 @@ _____/ \___/ \____|\____|_____|_____/_____/ _|    \___/ _____|";
 
             Console.ResetColor();
             Console.ReadKey();
-
         }
 
         private static string Wrap1(string text, int max)
