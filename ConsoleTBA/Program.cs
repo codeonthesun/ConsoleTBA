@@ -25,7 +25,7 @@ namespace Nighthole
             {
             }
             Console.ResetColor();
-            Console.ReadKey(true);
+            Console.ReadKey();
             Console.Clear();
         }
 
