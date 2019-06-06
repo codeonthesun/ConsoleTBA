@@ -83,6 +83,7 @@ namespace Nighthole
 
         public static void Agreement(ref string guess, ref string hint, ref string enterPrompt, ref bool jewelSelected)
         {
+            Console.ReadKey();
             Console.ForegroundColor = ConsoleColor.DarkGray;
             Console.Write(Wrap1("\n" + "   (Muted and befuddled by the situation, your primary hand reaches to your left eye unconsciously to learn it is now closed and scarred over in blood.", 118));
             Console.ReadKey(true);
