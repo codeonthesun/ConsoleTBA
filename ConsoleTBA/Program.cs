@@ -13,7 +13,7 @@ namespace Nighthole
             Console.WriteLine("\n\n\n\n\n\n" + gameTitle);
             Console.ResetColor();
             Console.Write("\n\n\n\n\n\n\n\n\n" + "(Text Based Adventure Game.)".PadLeft(49) + "\n\n");
-            for (int i = 0; i < "Double tap [ spacebar ] to start ".PadLeft(52).Length; i++)
+            for (int i = 0; i < "Double tap [ spacebar ] to start ".PadLeft(52).Length; i++) // Typewriter effect for startup text.
             {
                 Console.BackgroundColor = ConsoleColor.Black;
                 Console.Write("Double tap [ spacebar ] to start ".PadLeft(52)[i]);
@@ -21,11 +21,11 @@ namespace Nighthole
                 System.Threading.Thread.Sleep(70);
             }
 
-            while (!(Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Spacebar))
+            while (!(Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Spacebar)) // Limit user to only spacebar to begin.
             {
             }
             Console.ResetColor();
-            Console.ReadKey(true);
+            Console.ReadKey();
             Console.Clear();
         }
 
@@ -52,17 +52,17 @@ namespace Nighthole
                 Console.Write(" ");
                 Console.ForegroundColor = ConsoleColor.Red;
                 playerName = Console.ReadLine();
-                if (!string.IsNullOrEmpty(playerName))
+                if (!string.IsNullOrEmpty(playerName))  // Prevent user from entering empty input as their selected name.
                 {
                 }
                 else
                 {
-                    Console.Write("\n" + "   (Sorry, this isn't actually a choice... You MUST sign your name):");
+                    Console.Write("\n" + "   (Sorry, this isn't actually a choice... You MUST sign your name):");  // Repeat prompt until a name is given.
                 }
             } while (string.IsNullOrEmpty(playerName));
 
             {
-                for (int i = 0; i < @"~~".PadLeft(58).Length; i++)
+                for (int i = 0; i < @"~~".PadLeft(58).Length; i++)  // Typewriter effect for signature event.
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.Write(@"~~");
@@ -72,7 +72,7 @@ namespace Nighthole
 
                 Console.Write("X");
 
-                while (!(Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Enter))
+                while (!(Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Enter)) // Limit user to only Enter key to continue.
                 {
                     break;
                 }
@@ -83,6 +83,7 @@ namespace Nighthole
 
         public static void Agreement(ref string guess, ref string hint, ref string enterPrompt, ref bool jewelSelected)
         {
+            Console.ReadKey();
             Console.ForegroundColor = ConsoleColor.DarkGray;
             Console.Write(Wrap1("\n" + "   (Muted and befuddled by the situation, your primary hand reaches to your left eye unconsciously to learn it is now closed and scarred over in blood.", 118));
             Console.ReadKey(true);
@@ -159,10 +160,10 @@ namespace Nighthole
 
         private static void UserJewelChoiceAndHint(ref bool jewelSelected, ref string enterPrompt, ref string guess, ref string hint)
         {
-            while (!guess.Contains("GREEN") && !guess.Contains("RED") && !guess.Contains("BLUE"))
+            while (!guess.Contains("GREEN") && !guess.Contains("RED") && !guess.Contains("BLUE")) // Loop until Green, Blue, or Red is received as input from user.
 
             {
-                if (jewelSelected.Equals(false))
+                if (jewelSelected.Equals(false)) // Checking if user has selected a jewel, if not then prompt repeats until they do.
                 {
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.Write("\n" + "   Which calls to you? hit ");
@@ -179,7 +180,7 @@ namespace Nighthole
 
                     Console.ResetColor();
                 }
-                else
+                else  // Once appropiate jewel is selected, state is updated and user continues forward.
                 {
                     jewelSelected = true;
                     break;
