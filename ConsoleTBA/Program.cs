@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -7,7 +8,7 @@ namespace Nighthole
 {
     internal class Game
     {
-        public static void GameTitle(string gameTitle)
+        public static void SplashScreen(string gameTitle)
         {
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("\n\n\n\n\n\n" + gameTitle);
@@ -74,16 +75,20 @@ namespace Nighthole
 
                 while (!(Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Enter)) // Limit user to only Enter key to continue.
                 {
-                    break;
                 }
             }
 
+            if (!File.Exists("save.txt"))
+            {
+                File.AppendAllText("save.txt", "Your name: " + playerName);
+            }
             return playerName;
         }
 
+       
+
         public static void Agreement(ref string guess, ref string hint, ref string enterPrompt, ref bool jewelSelected)
         {
-            Console.ReadKey();
             Console.ForegroundColor = ConsoleColor.DarkGray;
             Console.Write(Wrap1("\n" + "   (Muted and befuddled by the situation, your primary hand reaches to your left eye unconsciously to learn it is now closed and scarred over in blood.", 118));
             Console.ReadKey(true);
@@ -104,6 +109,10 @@ namespace Nighthole
             Console.ReadKey(true);
             UserJewelChoiceAndHint(ref jewelSelected, ref enterPrompt, ref guess, ref hint);
             Console.Clear();
+
+           
+
+
         }
 
         public static void JourneyPart1(string playerName, string journeyPart1, string lineBreaker, string guess)
@@ -138,10 +147,9 @@ namespace Nighthole
             Console.ForegroundColor = ConsoleColor.Black;
             Console.Write("Unknown Bandit: ");
             Console.ResetColor();
-            Console.Write("\n   Oi, me's aint having fun! Wat you say we chop n' hacks " + playerName + "??");
+            Console.Write("\n   Oi, me's aint having fun! Wat you say we chop n' hacks....");
             Console.ReadKey(true);
-
-            ConsoleWindow.QuickEditMode(false);
+            Program.ConsoleWindow.QuickEditMode(false);
             Console.ReadLine();
         }
 
@@ -158,9 +166,9 @@ namespace Nighthole
             return output.ToString();
         }
 
-        private static void UserJewelChoiceAndHint(ref bool jewelSelected, ref string enterPrompt, ref string guess, ref string hint)
+        private static void UserJewelChoiceAndHint(ref bool jewelSelected, ref string enterPrompt, ref string playerJewelChoice, ref string hint)
         {
-            while (!guess.Contains("GREEN") && !guess.Contains("RED") && !guess.Contains("BLUE")) // Loop until Green, Blue, or Red is received as input from user.
+            while (!playerJewelChoice.Contains("GREEN") && !playerJewelChoice.Contains("RED") && !playerJewelChoice.Contains("BLUE")) // Loop until Green, Blue, or Red is received as input from user.
 
             {
                 if (jewelSelected.Equals(false)) // Checking if user has selected a jewel, if not then prompt repeats until they do.
@@ -174,17 +182,40 @@ namespace Nighthole
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.Write(" to confirm or receive a hint: ");
                     Console.ResetColor();
-                    guess = Console.ReadLine().ToUpper();
+                    playerJewelChoice = Console.ReadLine().ToUpper();
                     Console.ForegroundColor = ConsoleColor.DarkGray;
                     Console.Write(Wrap1("\n" + "   " + hint, 118));
 
                     Console.ResetColor();
                 }
+
+
+
+
                 else  // Once appropiate jewel is selected, state is updated and user continues forward.
                 {
                     jewelSelected = true;
+                  
+
                     break;
+
+                    
                 }
+
+               
+
+            }
+
+        }
+
+        public static void SaveGame(string playerJewelChoice)
+        {
+            if (File.Exists("save.txt"))
+            {
+                
+                
+                File.AppendAllText("save.txt", "\n" + "Your Jewel Choice: " + playerJewelChoice);
+
             }
         }
     }
@@ -212,12 +243,6 @@ namespace Nighthole
 ░ ▒░   ▒ ▒ ░▓   ░▒   ▒  ▒ ░░▒░▒  ▒ ░░    ▒ ░░▒░▒░ ▒░▒░▒░ ░ ▒░▓  ░░░ ▒░ ░
 ░ ░░   ░ ▒░ ▒ ░  ░   ░  ▒ ░▒░ ░    ░     ▒ ░▒░ ░  ░ ▒ ▒░ ░ ░ ▒  ░ ░ ░  ░";
 
-            string arcaneVoice = @" __  ____   ______ _____ _____ ____  ___ ___  _   _ ____   __     _____ ___ ____ _____
- |  \/  \ \ / / ___|_   _| ____|  _ \|_ _/ _ \| | | / ___|  \ \   / / _ \_ _/ ___| ____|  _
- | |\/| |\ V /\___ \ | | |  _| | |_) || | | | | | | \___ \   \ \ / / | | | | |   |  _|   (_)
- | |  | | | |  ___) || | | |___|  _ < | | |_| | |_| |___) |   \ V /| |_| | | |___| |___   _
- |_|  |_| |_| |____/ |_| |_____|_| \_\___\___/ \___/|____/     \_/  \___/___\____|_____| (_)";
-
             string gameContinued = @"  ___|  _ \   \  |__ __|_ _|  \  | |   | ____| __ \
  |     |   |   \ |   |    |    \ | |   | __|   |   |
  |     |   | |\  |   |    |  |\  | |   | |     |   |
@@ -238,12 +263,7 @@ _____/ \___/ \____|\____|_____|_____/_____/ _|    \___/ _____|";
  \   | |   | |   | __ <  |\  | |        |     ___/   |      |
 \___/ \___/ \___/ _| \_\_| \_|_____|   _|    _|     _|     _|";
 
-            string gameTitle2 = @" ░ ▒░  ░   ▒ ░ ░   ░ ░  ░  ░▒ ░ ▒░    ░    ▒░▒   ░ ░░▒░ ░ ░  ▒ ░  ░ ▒ ▒░
-   ░   ░   ░   ░     ░     ░░   ░   ░       ░    ░  ░░░ ░ ░  ▒ ░░ ░ ░ ▒
-    ░        ░       ░  ░   ░               ░         ░      ░      ░ ░  ";
-
-            string lineBreaker = @"______________________________________________________
-";
+            string lineBreaker = @"______________________________________________________";
 
             string jewelRed = "Red";
 
@@ -251,90 +271,107 @@ _____/ \___/ \____|\____|_____|_____/_____/ _|    \___/ _____|";
 
             string jewelBlue = "Blue";
 
-            string guess = " ";
+            string playerJewelChoice = " ";
+
+            bool jewelSelected = false;
 
             string hint = ("(You have a feeling these jewels hold unknown powers and will possibly dictate your journey. Choose either the Blue, Green, or Red jewel...)");
 
             string enterPrompt = "[ enter ]";
 
-            int guessAmount = 0;
-
-            int guessLimit = 100;
-
-            bool outOfGuesses = false;
-
             bool gameOver = false;
 
-            bool jewelSelected = false;
+            string DataFile = "save.txt";
 
-            ////Console.WriteLine(string.Format("{0," + ((Console.WindowWidth / 2) + (gameTitle.Length / 2)) + "}", gameTitle));
+            string Content = "[Empty File]";
 
             ConsoleWindow.QuickEditMode(false);
-            Game.GameTitle(gameTitle);
+            Game.SplashScreen(gameTitle);
             Game.Introduction(playerGreeting, enterPrompt);
-            Game.Agreement(ref guess, ref hint, ref enterPrompt, ref jewelSelected);
-            Game.JourneyPart1(playerName, journeyPart1, lineBreaker, guess);
-        }
-    }
-
-    public static class ConsoleWindow
-    {
-        public static void QuickEditMode(bool Enable)
-        {
-            //QuickEdit lets the user select text in the console window with the mouse, to copy to the windows clipboard.
-            //But selecting text stops the console process (e.g. unzipping). This may not be always wanted.
-            IntPtr consoleHandle = NativeFunctions.GetStdHandle((int)NativeFunctions.StdHandle.STD_INPUT_HANDLE);
-            UInt32 consoleMode;
-
-            NativeFunctions.GetConsoleMode(consoleHandle, out consoleMode);
-            if (Enable)
-                consoleMode |= ((uint)NativeFunctions.ConsoleMode.ENABLE_QUICK_EDIT_MODE);
-            else
-                consoleMode &= ~((uint)NativeFunctions.ConsoleMode.ENABLE_QUICK_EDIT_MODE);
-
-            consoleMode |= ((uint)NativeFunctions.ConsoleMode.ENABLE_EXTENDED_FLAGS);
-
-            NativeFunctions.SetConsoleMode(consoleHandle, consoleMode);
+            Game.Agreement(ref playerJewelChoice, ref hint, ref enterPrompt, ref jewelSelected);
+            Game.JourneyPart1(playerName, journeyPart1, lineBreaker, playerJewelChoice);
+            Game.SaveGame(playerJewelChoice);
         }
 
-        private static class NativeFunctions
+        public static class ConsoleWindow
         {
-            public enum ConsoleMode : uint
+            public static void QuickEditMode(bool Enable)
             {
-                ENABLE_ECHO_INPUT = 0x0004,
-                ENABLE_EXTENDED_FLAGS = 0x0080,
-                ENABLE_INSERT_MODE = 0x0020,
-                ENABLE_LINE_INPUT = 0x0002,
-                ENABLE_MOUSE_INPUT = 0x0010,
-                ENABLE_PROCESSED_INPUT = 0x0001,
-                ENABLE_QUICK_EDIT_MODE = 0x0040,
-                ENABLE_WINDOW_INPUT = 0x0008,
-                ENABLE_VIRTUAL_TERMINAL_INPUT = 0x0200,
+                //QuickEdit lets the user select text in the console window with the mouse, to copy to the windows clipboard.
+                //But selecting text stops the console process (e.g. unzipping). This may not be always wanted.
+                IntPtr consoleHandle = NativeFunctions.GetStdHandle((int)NativeFunctions.StdHandle.STD_INPUT_HANDLE);
+                UInt32 consoleMode;
 
-                //screen buffer handle
-                ENABLE_PROCESSED_OUTPUT = 0x0001,
+                NativeFunctions.GetConsoleMode(consoleHandle, out consoleMode);
+                if (Enable)
+                    consoleMode |= ((uint)NativeFunctions.ConsoleMode.ENABLE_QUICK_EDIT_MODE);
+                else
+                    consoleMode &= ~((uint)NativeFunctions.ConsoleMode.ENABLE_QUICK_EDIT_MODE);
 
-                ENABLE_WRAP_AT_EOL_OUTPUT = 0x0002,
-                ENABLE_VIRTUAL_TERMINAL_PROCESSING = 0x0004,
-                DISABLE_NEWLINE_AUTO_RETURN = 0x0008,
-                ENABLE_LVB_GRID_WORLDWIDE = 0x0010
+                consoleMode |= ((uint)NativeFunctions.ConsoleMode.ENABLE_EXTENDED_FLAGS);
+
+                NativeFunctions.SetConsoleMode(consoleHandle, consoleMode);
             }
 
-            public enum StdHandle : int
+            private static class NativeFunctions
             {
-                STD_INPUT_HANDLE = -10,
-                STD_OUTPUT_HANDLE = -11,
-                STD_ERROR_HANDLE = -12,
+                public enum ConsoleMode : uint
+                {
+                    ENABLE_ECHO_INPUT = 0x0004,
+                    ENABLE_EXTENDED_FLAGS = 0x0080,
+                    ENABLE_INSERT_MODE = 0x0020,
+                    ENABLE_LINE_INPUT = 0x0002,
+                    ENABLE_MOUSE_INPUT = 0x0010,
+                    ENABLE_PROCESSED_INPUT = 0x0001,
+                    ENABLE_QUICK_EDIT_MODE = 0x0040,
+                    ENABLE_WINDOW_INPUT = 0x0008,
+                    ENABLE_VIRTUAL_TERMINAL_INPUT = 0x0200,
+
+                    //screen buffer handle
+                    ENABLE_PROCESSED_OUTPUT = 0x0001,
+
+                    ENABLE_WRAP_AT_EOL_OUTPUT = 0x0002,
+                    ENABLE_VIRTUAL_TERMINAL_PROCESSING = 0x0004,
+                    DISABLE_NEWLINE_AUTO_RETURN = 0x0008,
+                    ENABLE_LVB_GRID_WORLDWIDE = 0x0010
+                }
+
+                public enum StdHandle : int
+                {
+                    STD_INPUT_HANDLE = -10,
+                    STD_OUTPUT_HANDLE = -11,
+                    STD_ERROR_HANDLE = -12,
+                }
+
+                [DllImport("kernel32.dll", SetLastError = true)]
+                public static extern bool GetConsoleMode(IntPtr hConsoleHandle, out uint lpMode);
+
+                [DllImport("kernel32.dll", SetLastError = true)]
+                public static extern IntPtr GetStdHandle(int nStdHandle); //returns Handle
+
+                [DllImport("kernel32.dll", SetLastError = true)]
+                public static extern bool SetConsoleMode(IntPtr hConsoleHandle, uint dwMode);
             }
-
-            [DllImport("kernel32.dll", SetLastError = true)]
-            public static extern bool GetConsoleMode(IntPtr hConsoleHandle, out uint lpMode);
-
-            [DllImport("kernel32.dll", SetLastError = true)]
-            public static extern IntPtr GetStdHandle(int nStdHandle); //returns Handle
-
-            [DllImport("kernel32.dll", SetLastError = true)]
-            public static extern bool SetConsoleMode(IntPtr hConsoleHandle, uint dwMode);
         }
+
+        static public string EncodeTo64(string toEncode)
+        {
+            byte[] toEncodeAsBytes
+                  = System.Text.ASCIIEncoding.ASCII.GetBytes(toEncode);
+            string returnValue
+                  = System.Convert.ToBase64String(toEncodeAsBytes);
+            return returnValue;
+        }
+
+        static public string DecodeFrom64(string encodedData)
+        {
+            byte[] encodedDataAsBytes
+                = System.Convert.FromBase64String(encodedData);
+            string returnValue =
+               System.Text.ASCIIEncoding.ASCII.GetString(encodedDataAsBytes);
+            return returnValue;
+        }
+
+        
     }
 }
