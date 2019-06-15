@@ -9,14 +9,21 @@ namespace Nighthole
 {
     internal class Game
     {
-        public static void SplashScreen(string gameTitle)
+        public static void SplashScreen()
         {
+            string gameTitle = @" ███▄    █  ██▓  ▄████  ██░ ██ ▄▄▄█████▓ ██░ ██  ▒█████   ██▓    ▓█████
+ ██ ▀█   █ ▓██▒ ██▒ ▀█▒▓██░ ██▒▓  ██▒ ▓▒▓██░ ██▒▒██▒  ██▒▓██▒    ▓█   ▀
+▓██  ▀█ ██▒▒██▒▒██░▄▄▄░▒██▀▀██░▒ ▓██░ ▒░▒██▀▀██░▒██░  ██▒▒██░    ▒███
+▓██▒  ▐▌██▒░██░░▓█  ██▓░▓█ ░██ ░ ▓██▓ ░ ░▓█ ░██ ▒██   ██░▒██░    ▒▓█  ▄
+▒██░   ▓██░░██░░▒▓███▀▒░▓█▒░██▓  ▒██▒ ░ ░▓█▒░██▓░ ████▓▒░░██████▒░▒████▒
+░ ▒░   ▒ ▒ ░▓   ░▒   ▒  ▒ ░░▒░▒  ▒ ░░    ▒ ░░▒░▒░ ▒░▒░▒░ ░ ▒░▓  ░░░ ▒░ ░
+░ ░░   ░ ▒░ ▒ ░  ░   ░  ▒ ░▒░ ░    ░     ▒ ░▒░ ░  ░ ▒ ▒░ ░ ░ ▒  ░ ░ ░  ░";
             Console.Title = "Nighthole";
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("\n\n\n\n\n\n" + gameTitle);
             Console.ResetColor();
             Console.Write("\n\n\n\n\n\n\n\n\n" + "(Text Based Adventure Game.)".PadLeft(49) + "\n\n");
-            for (int i = 0; i < "Double tap [ spacebar ] to start ".PadLeft(52).Length; i++) 
+            for (int i = 0; i < "Double tap [ spacebar ] to start ".PadLeft(52).Length; i++)
             {
                 Console.BackgroundColor = ConsoleColor.Black;
                 Console.Write("Double tap [ spacebar ] to start ".PadLeft(52)[i]);
@@ -24,7 +31,7 @@ namespace Nighthole
                 System.Threading.Thread.Sleep(70);
             }
 
-            while (!(Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Spacebar)) 
+            while (!(Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Spacebar))
             {
             }
             Console.ResetColor();
@@ -71,22 +78,14 @@ namespace Nighthole
                     Console.Write(@"~~");
                     Console.ResetColor();
                     System.Threading.Thread.Sleep(5);
-                    
                 }
 
                 Console.Write("X");
                 while (!(Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Enter)) // Limit user to only Enter key to continue.
                 {
                 }
-            }
 
-            if (File.Exists("save.txt"))
-            {
-                ///File.Delete("save.txt");
-            }
-            else
-            {
-                File.AppendAllText("save.txt", Program.encrypt(playerName));
+                File.AppendAllText("save.txt", playerName); // Create and write playerName to file.
             }
             return playerName;
         }
@@ -115,9 +114,8 @@ namespace Nighthole
             Console.Clear();
         }
 
-        public static void JourneyPart1(string playerName, string journeyPart1, string lineBreaker, string guess)
+        public static void JourneyPart1(string lineBreaker, string guess)
         {
-            Console.Write(journeyPart1);
             Console.Write("\n" + lineBreaker);
             Console.ForegroundColor = ConsoleColor.DarkGray;
             Console.Write(Wrap("\n" + "   (You tightly hold the " + (guess.ToLower()) + " jewel in your hand, blanketing it in your blood.", 118));
@@ -183,6 +181,7 @@ namespace Nighthole
                     Console.Write(" to confirm or receive a hint: ");
                     Console.ResetColor();
                     playerJewelChoice = Console.ReadLine().ToUpper();
+                    File.AppendAllText("save.txt", " " + playerJewelChoice.ToLower());
                     Console.ForegroundColor = ConsoleColor.DarkGray;
                     Console.Write(Wrap("\n" + "   (You have a feeling these jewels hold unknown powers and will possibly dictate your journey. Choose either the Blue, Green, or Red jewel...)", 118));
                     Console.ResetColor();
@@ -196,52 +195,38 @@ namespace Nighthole
             }
         }
 
-        public static void Data(string playerJewelChoice)
+        public static void DataTurtle()
         {
             if (File.Exists("save.txt"))
             {
-
-
-                ////////// File.AppendAllText("save.txt", Program.encrypt(playerJewelChoice));
-
-                string gameDataChoice = "";
-                bool gameDataChoiceMade = false;
-                Console.Write("Salutations, I am the data turtle and if my memory serves correctly you are " + Program.Decrypt(File.ReadAllText("save.txt")));
+                Console.Title = "Data Turtle";
+                char gameDataChoice;
+                Console.Write("Salutations, I am the data turtle and if my memory serves correctly you are " + File.ReadAllText("save.txt"));
                 Console.Write("?");
                 Console.Write("\n" + "Y to Load Game, N to Delete Progress: ");
-                gameDataChoice = Console.ReadLine().ToUpper();
-                Console.ReadKey();
+                gameDataChoice = Convert.ToChar(Console.ReadLine().ToUpper());
 
-                while (!gameDataChoice.Contains("Y") && !gameDataChoice.Contains("N"))
+                switch (gameDataChoice)
                 {
+                    case 'Y':
+                        Console.Clear();
 
-                    if (gameDataChoice.Equals(false))
-                    {
+                        break;
 
-                    }
-                    else
-                    {
-
+                    case 'N':
+                        Console.WriteLine("Progress wiped!");
+                        File.Delete("save.txt");
                         Console.ReadKey();
                         Console.Clear();
-                        gameDataChoiceMade = true;
-                    }
-
-
+                        break;
                 }
-
-                
-
-
-
-
-            } else
-            {
-
             }
-           
-
-            Console.ReadLine();
+            else
+            {
+                /// Console.WriteLine("Unfortunately I could not find any save data! :(");
+                ///  Console.ReadKey();
+                /// Console.Clear();
+            }
         }
     }
 
@@ -258,14 +243,6 @@ namespace Nighthole
 
             string playerName = " ";
 
-            string gameTitle = @" ███▄    █  ██▓  ▄████  ██░ ██ ▄▄▄█████▓ ██░ ██  ▒█████   ██▓    ▓█████
- ██ ▀█   █ ▓██▒ ██▒ ▀█▒▓██░ ██▒▓  ██▒ ▓▒▓██░ ██▒▒██▒  ██▒▓██▒    ▓█   ▀
-▓██  ▀█ ██▒▒██▒▒██░▄▄▄░▒██▀▀██░▒ ▓██░ ▒░▒██▀▀██░▒██░  ██▒▒██░    ▒███
-▓██▒  ▐▌██▒░██░░▓█  ██▓░▓█ ░██ ░ ▓██▓ ░ ░▓█ ░██ ▒██   ██░▒██░    ▒▓█  ▄
-▒██░   ▓██░░██░░▒▓███▀▒░▓█▒░██▓  ▒██▒ ░ ░▓█▒░██▓░ ████▓▒░░██████▒░▒████▒
-░ ▒░   ▒ ▒ ░▓   ░▒   ▒  ▒ ░░▒░▒  ▒ ░░    ▒ ░░▒░▒░ ▒░▒░▒░ ░ ▒░▓  ░░░ ▒░ ░
-░ ░░   ░ ▒░ ▒ ░  ░   ░  ▒ ░▒░ ░    ░     ▒ ░▒░ ░  ░ ▒ ▒░ ░ ░ ▒  ░ ░ ░  ░";
-
             string gameContinued = @"  ___|  _ \   \  |__ __|_ _|  \  | |   | ____| __ \
  |     |   |   \ |   |    |    \ | |   | __|   |   |
  |     |   | |\  |   |    |  |\  | |   | |     |   |
@@ -281,18 +258,7 @@ _| _/    _\___|_____|\___/ _| \_\_____|_)_)  _| \_|\___/  _|
       | |   | |     |     |          |     | __|   |   | |
 _____/ \___/ \____|\____|_____|_____/_____/ _|    \___/ _____|";
 
-            string journeyPart1 = @"     |  _ \  |   |  _ \   \  | ____|\ \   /    _ \__ __|  _ |
-     | |   | |   | |   |   \ | __|   \   /    |   |  |      |
- \   | |   | |   | __ <  |\  | |        |     ___/   |      |
-\___/ \___/ \___/ _| \_\_| \_|_____|   _|    _|     _|     _|";
-
             string lineBreaker = @"______________________________________________________";
-
-            string jewelRed = "Red";
-
-            string jewelGreen = "Green";
-
-            string jewelBlue = "Blue";
 
             string playerJewelChoice = " ";
 
@@ -302,14 +268,12 @@ _____/ \___/ \____|\____|_____|_____/_____/ _|    \___/ _____|";
 
             bool gameOver = false;
 
-         ConsoleWindow.QuickEditMode(false);
-          Game.Data(playerJewelChoice);
-            Game.SplashScreen(gameTitle);
-        Game.Introduction(enterPrompt);
-         Game.Agreement(ref playerJewelChoice, ref enterPrompt, ref jewelSelected);
-          Game.JourneyPart1(playerName, journeyPart1, lineBreaker, playerJewelChoice);
-            
-
+            ConsoleWindow.QuickEditMode(false);
+            Game.DataTurtle();
+            Game.SplashScreen();
+            Game.Introduction(enterPrompt);
+            Game.Agreement(ref playerJewelChoice, ref enterPrompt, ref jewelSelected);
+            Game.JourneyPart1(lineBreaker, playerJewelChoice);
         }
 
         public static class ConsoleWindow
@@ -373,7 +337,6 @@ _____/ \___/ \____|\____|_____|_____/_____/ _|    \___/ _____|";
             }
         }
 
-
         static public string encrypt(string encryptString)
         {
             string EncryptionKey = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -402,6 +365,7 @@ _____/ \___/ \____|\____|_____|_____/_____/ _|    \___/ _____|";
         {
             string EncryptionKey = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             cipherText = cipherText.Replace(" ", "+");
+
             byte[] cipherBytes = Convert.FromBase64String(cipherText);
             using (Aes encryptor = Aes.Create())
             {
@@ -422,6 +386,5 @@ _____/ \___/ \____|\____|_____|_____/_____/ _|    \___/ _____|";
             }
             return cipherText;
         }
-
     }
 }
