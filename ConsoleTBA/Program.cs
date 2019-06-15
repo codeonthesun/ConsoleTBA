@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -10,11 +11,12 @@ namespace Nighthole
     {
         public static void SplashScreen(string gameTitle)
         {
+            Console.Title = "Nighthole";
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("\n\n\n\n\n\n" + gameTitle);
             Console.ResetColor();
             Console.Write("\n\n\n\n\n\n\n\n\n" + "(Text Based Adventure Game.)".PadLeft(49) + "\n\n");
-            for (int i = 0; i < "Double tap [ spacebar ] to start ".PadLeft(52).Length; i++) // Typewriter effect for startup text.
+            for (int i = 0; i < "Double tap [ spacebar ] to start ".PadLeft(52).Length; i++) 
             {
                 Console.BackgroundColor = ConsoleColor.Black;
                 Console.Write("Double tap [ spacebar ] to start ".PadLeft(52)[i]);
@@ -22,7 +24,7 @@ namespace Nighthole
                 System.Threading.Thread.Sleep(70);
             }
 
-            while (!(Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Spacebar)) // Limit user to only spacebar to begin.
+            while (!(Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Spacebar)) 
             {
             }
             Console.ResetColor();
@@ -63,16 +65,16 @@ namespace Nighthole
             } while (string.IsNullOrEmpty(playerName));
 
             {
-                for (int i = 0; i < @"~~".PadLeft(58).Length; i++)  // Typewriter effect for signature event.
+                for (int i = 0; i < @"~~".PadLeft(58).Length; i++)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.Write(@"~~");
                     Console.ResetColor();
                     System.Threading.Thread.Sleep(5);
+                    
                 }
 
                 Console.Write("X");
-
                 while (!(Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Enter)) // Limit user to only Enter key to continue.
                 {
                 }
@@ -80,8 +82,11 @@ namespace Nighthole
 
             if (File.Exists("save.txt"))
             {
-                File.Delete("save.txt");
-                File.AppendAllText("save.txt", "Your name: " + playerName);
+                ///File.Delete("save.txt");
+            }
+            else
+            {
+                File.AppendAllText("save.txt", Program.encrypt(playerName));
             }
             return playerName;
         }
@@ -142,7 +147,7 @@ namespace Nighthole
             Console.ForegroundColor = ConsoleColor.Black;
             Console.Write("Unknown Bandit: ");
             Console.ResetColor();
-            Console.Write("\n" + "Sire? Is that you? It is I, Gracio. I've been looking for you, thank goodness. I will free you right away, I already dispoed of the guards and retrieved the key. The witches information proved to be true.  ");
+            Console.Write("\n" + "Sire? Is that you? It is I, Gracio. I was sent to find you, the queen hastily sent the order when your horse was found limping back to the castle distressed and wounded. thank the stars you are alive. I will free you immediately, the guards have already been dispoed of. The bumbling idiots lie in tent, unsupervised.  ");
             Console.ReadKey(true);
             Program.ConsoleWindow.QuickEditMode(false);
             Console.ReadLine();
@@ -191,12 +196,52 @@ namespace Nighthole
             }
         }
 
-        public static void SaveGame(string playerJewelChoice)
+        public static void Data(string playerJewelChoice)
         {
             if (File.Exists("save.txt"))
             {
-                File.AppendAllText("save.txt", "\n" + "Your Jewel Choice: " + playerJewelChoice);
+
+
+                ////////// File.AppendAllText("save.txt", Program.encrypt(playerJewelChoice));
+
+                string gameDataChoice = "";
+                bool gameDataChoiceMade = false;
+                Console.Write("Salutations, I am the data turtle and if my memory serves correctly you are " + Program.Decrypt(File.ReadAllText("save.txt")));
+                Console.Write("?");
+                Console.Write("\n" + "Y to Load Game, N to Delete Progress: ");
+                gameDataChoice = Console.ReadLine().ToUpper();
+                Console.ReadKey();
+
+                while (!gameDataChoice.Contains("Y") && !gameDataChoice.Contains("N"))
+                {
+
+                    if (gameDataChoice.Equals(false))
+                    {
+
+                    }
+                    else
+                    {
+
+                        Console.ReadKey();
+                        Console.Clear();
+                        gameDataChoiceMade = true;
+                    }
+
+
+                }
+
+                
+
+
+
+
+            } else
+            {
+
             }
+           
+
+            Console.ReadLine();
         }
     }
 
@@ -257,12 +302,13 @@ _____/ \___/ \____|\____|_____|_____/_____/ _|    \___/ _____|";
 
             bool gameOver = false;
 
-            ConsoleWindow.QuickEditMode(false);
+         ConsoleWindow.QuickEditMode(false);
+          Game.Data(playerJewelChoice);
             Game.SplashScreen(gameTitle);
-            Game.Introduction(enterPrompt);
-            Game.Agreement(ref playerJewelChoice, ref enterPrompt, ref jewelSelected);
-            Game.JourneyPart1(playerName, journeyPart1, lineBreaker, playerJewelChoice);
-            Game.SaveGame(playerJewelChoice);
+        Game.Introduction(enterPrompt);
+         Game.Agreement(ref playerJewelChoice, ref enterPrompt, ref jewelSelected);
+          Game.JourneyPart1(playerName, journeyPart1, lineBreaker, playerJewelChoice);
+            
 
         }
 
@@ -327,22 +373,55 @@ _____/ \___/ \____|\____|_____|_____/_____/ _|    \___/ _____|";
             }
         }
 
-        static public string EncodeTo64(string toEncode)
+
+        static public string encrypt(string encryptString)
         {
-            byte[] toEncodeAsBytes
-                  = System.Text.ASCIIEncoding.ASCII.GetBytes(toEncode);
-            string returnValue
-                  = System.Convert.ToBase64String(toEncodeAsBytes);
-            return returnValue;
+            string EncryptionKey = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            byte[] clearBytes = Encoding.Unicode.GetBytes(encryptString);
+            using (Aes encryptor = Aes.Create())
+            {
+                Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(EncryptionKey, new byte[] {
+                0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76
+            });
+                encryptor.Key = pdb.GetBytes(32);
+                encryptor.IV = pdb.GetBytes(16);
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    using (CryptoStream cs = new CryptoStream(ms, encryptor.CreateEncryptor(), CryptoStreamMode.Write))
+                    {
+                        cs.Write(clearBytes, 0, clearBytes.Length);
+                        cs.Close();
+                    }
+                    encryptString = Convert.ToBase64String(ms.ToArray());
+                }
+            }
+            return encryptString;
         }
 
-        static public string DecodeFrom64(string encodedData)
+        static public string Decrypt(string cipherText)
         {
-            byte[] encodedDataAsBytes
-                = System.Convert.FromBase64String(encodedData);
-            string returnValue =
-               System.Text.ASCIIEncoding.ASCII.GetString(encodedDataAsBytes);
-            return returnValue;
+            string EncryptionKey = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            cipherText = cipherText.Replace(" ", "+");
+            byte[] cipherBytes = Convert.FromBase64String(cipherText);
+            using (Aes encryptor = Aes.Create())
+            {
+                Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(EncryptionKey, new byte[] {
+                0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76
+            });
+                encryptor.Key = pdb.GetBytes(32);
+                encryptor.IV = pdb.GetBytes(16);
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    using (CryptoStream cs = new CryptoStream(ms, encryptor.CreateDecryptor(), CryptoStreamMode.Write))
+                    {
+                        cs.Write(cipherBytes, 0, cipherBytes.Length);
+                        cs.Close();
+                    }
+                    cipherText = Encoding.Unicode.GetString(ms.ToArray());
+                }
+            }
+            return cipherText;
         }
+
     }
 }
