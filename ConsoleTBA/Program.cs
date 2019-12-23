@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -223,15 +222,8 @@ namespace Nighthole
             }
             else
             {
-                /// Console.WriteLine("Unfortunately I could not find any save data! :(");
-                ///  Console.ReadKey();
-                /// Console.Clear();
             }
         }
-    }
-
-    internal class Item
-    {
     }
 
     internal class Program
@@ -240,23 +232,6 @@ namespace Nighthole
         private static void Main(string[] args)
         {
             Console.OutputEncoding = Encoding.UTF8;
-
-            string playerName = " ";
-
-            string gameContinued = @"  ___|  _ \   \  |__ __|_ _|  \  | |   | ____| __ \
- |     |   |   \ |   |    |    \ | |   | __|   |   |
- |     |   | |\  |   |    |  |\  | |   | |     |   |
-\____|\___/ _| \_|  _|  ___|_| \_|\___/ _____|____/ ";
-
-            string gameOverTitle = @" ____| \   _ _| |     |   |  _ \  ____| | |    \  |  _ \__ __|
- |    _ \    |  |     |   | |   | __|   | |     \ | |   |  |
- __| ___ \   |  |     |   | __ <  |    _|_|   |\  | |   |  |
-_| _/    _\___|_____|\___/ _| \_\_____|_)_)  _| \_|\___/  _|
-
-  ___|  |   |  ___|  ___| ____|  ___|  ___|  ____| |   | |
-\___ \  |   | |     |     __|  \___ \\___ \  |     |   | |
-      | |   | |     |     |          |     | __|   |   | |
-_____/ \___/ \____|\____|_____|_____/_____/ _|    \___/ _____|";
 
             string lineBreaker = @"______________________________________________________";
 
@@ -335,56 +310,6 @@ _____/ \___/ \____|\____|_____|_____/_____/ _|    \___/ _____|";
                 [DllImport("kernel32.dll", SetLastError = true)]
                 public static extern bool SetConsoleMode(IntPtr hConsoleHandle, uint dwMode);
             }
-        }
-
-        static public string encrypt(string encryptString)
-        {
-            string EncryptionKey = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            byte[] clearBytes = Encoding.Unicode.GetBytes(encryptString);
-            using (Aes encryptor = Aes.Create())
-            {
-                Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(EncryptionKey, new byte[] {
-                0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76
-            });
-                encryptor.Key = pdb.GetBytes(32);
-                encryptor.IV = pdb.GetBytes(16);
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    using (CryptoStream cs = new CryptoStream(ms, encryptor.CreateEncryptor(), CryptoStreamMode.Write))
-                    {
-                        cs.Write(clearBytes, 0, clearBytes.Length);
-                        cs.Close();
-                    }
-                    encryptString = Convert.ToBase64String(ms.ToArray());
-                }
-            }
-            return encryptString;
-        }
-
-        static public string Decrypt(string cipherText)
-        {
-            string EncryptionKey = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            cipherText = cipherText.Replace(" ", "+");
-
-            byte[] cipherBytes = Convert.FromBase64String(cipherText);
-            using (Aes encryptor = Aes.Create())
-            {
-                Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(EncryptionKey, new byte[] {
-                0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76
-            });
-                encryptor.Key = pdb.GetBytes(32);
-                encryptor.IV = pdb.GetBytes(16);
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    using (CryptoStream cs = new CryptoStream(ms, encryptor.CreateDecryptor(), CryptoStreamMode.Write))
-                    {
-                        cs.Write(cipherBytes, 0, cipherBytes.Length);
-                        cs.Close();
-                    }
-                    cipherText = Encoding.Unicode.GetString(ms.ToArray());
-                }
-            }
-            return cipherText;
         }
     }
 }

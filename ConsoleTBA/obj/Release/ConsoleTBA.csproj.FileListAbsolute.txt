@@ -1,0 +1,7 @@
+C:\Users\jerem\source\repos\ConsoleTBA\ConsoleTBA\obj\Release\ConsoleTBA.csprojAssemblyReference.cache
+C:\Users\jerem\source\repos\ConsoleTBA\ConsoleTBA\obj\Release\ConsoleTBA.csproj.CoreCompileInputs.cache
+C:\Users\jerem\source\repos\ConsoleTBA\ConsoleTBA\bin\Release\ConsoleTBA.exe.config
+C:\Users\jerem\source\repos\ConsoleTBA\ConsoleTBA\bin\Release\ConsoleTBA.exe
+C:\Users\jerem\source\repos\ConsoleTBA\ConsoleTBA\bin\Release\ConsoleTBA.pdb
+C:\Users\jerem\source\repos\ConsoleTBA\ConsoleTBA\obj\Release\ConsoleTBA.exe
+C:\Users\jerem\source\repos\ConsoleTBA\ConsoleTBA\obj\Release\ConsoleTBA.pdb
